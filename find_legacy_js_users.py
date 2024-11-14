@@ -2,17 +2,29 @@
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
+#     "python-dotenv",
 #     "requests",
 # ]
 # ///
 
+"""
+Find projects using obsolete versions of the Sentry JavaScript SDK.
+
+The script lists the affected projects as well as the team admins of the teams owning
+these projects.
+
+You need to set the `SENTRY_RO_TOKEN` environment variable to run this script.
+"""
+
 import os
+
+from dotenv import load_dotenv
 
 from sentry_client import SentryClient
 
 
 def main():
-    client = SentryClient(os.environ["SENTRY_TOKEN"])
+    client = SentryClient(os.environ["SENTRY_RO_TOKEN"])
 
     print("Affected projects:")
     teams = []
@@ -46,4 +58,5 @@ def main():
 
 
 if __name__ == "__main__":
+    load_dotenv()
     main()

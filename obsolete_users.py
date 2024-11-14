@@ -7,6 +7,15 @@
 #     "requests",
 # ]
 # ///
+"""
+List users with expired invites, and users who are no longer at Mozilla.
+
+To find users no longer at Mozilla, the list of members of the Mozilla Sentry org is
+checked against the LDAP directory. You need to be on the Mozilla Corp VPN to be able
+to query the LDAP server.
+
+You need to set the `LDAP_BIND_USER` and `SENTRY_RO_TOKEN` environment variables.
+"""
 
 import getpass
 from operator import itemgetter
