@@ -14,6 +14,9 @@ To find users no longer at Mozilla, the list of members of the Mozilla Sentry or
 checked against the LDAP directory. You need to be on the Mozilla Corp VPN to be able
 to query the LDAP server.
 
+You can pipe the output of the script to `delete_users.py` to delete all users in the
+output from the Mozilla Sentry org.
+
 You need to set the `LDAP_BIND_USER` and `SENTRY_RO_TOKEN` environment variables.
 """
 

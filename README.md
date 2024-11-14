@@ -4,6 +4,7 @@ Scripts to help the Observability Team at Mozilla manage Sentry.
 
 ## Files
 
+* `delete_users.py` - delete users from the Mozilla Sentry org
 * `find_legacy_js_users.py` - list projects using an obsolete version of the JS SDK
   and their team admins
 * `obsolete_users.py` - list users with expired invites, and users no longer at Mozilla
