@@ -15,13 +15,25 @@ specify the main email address of the user account in addition to the user id, a
 script will only delete the user if the email address matches. Further fields after the
 email address are also ignored.
 
+You can use the output of the `obsolete_user.py` script as an input for this script.
+
+You need to set the `SENTRY_TOKEN` environment variable.
+
 Summary of the input line format:
 
     <user id> [<primary email>] [<ignored fields> ...]
 
-You can use the output of the `obsolete_user.py` script as an input for this script.
+Example input with just user ids:
 
-You need to set the `SENTRY_TOKEN` environment variable.
+    1250801
+    1407292
+    1894897
+
+Example input with user ids, email addresses and full names:
+
+    1250801 fallen@mozilla.com     Frances Allen
+    1407292 ghopper@mozilla.com    Grace Hopper
+    1894897 alovelace@mozilla.com  Ada Lovelace
 """
 
 import os
