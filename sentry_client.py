@@ -21,7 +21,7 @@ class SentryClient:
         url = f"{BASE_URL}/{path}"
         response = self.session.request(method, url, **kwargs)
         response.raise_for_status()
-        return response.json()
+        return response
 
     def paginated_request(self, path: str, **kwargs):
         url = f"{BASE_URL}/{path}"
@@ -36,6 +36,16 @@ class SentryClient:
 
     def org_members(self):
         yield from self.paginated_request(f"organizations/{SENTRY_ORG}/members/")
+
+    def get_member(self, member_id: str):
+        return self.request(
+            "GET", f"organizations/{SENTRY_ORG}/members/{member_id}/"
+        ).json()
+
+    def delete_member(self, member_id: str):
+        return self.request(
+            "DELETE", f"organizations/{SENTRY_ORG}/members/{member_id}/"
+        )
 
     def projects(self):
         yield from self.paginated_request(f"organizations/{SENTRY_ORG}/projects/")

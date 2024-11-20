@@ -14,6 +14,9 @@ To find users no longer at Mozilla, the list of members of the Mozilla Sentry or
 checked against the LDAP directory. You need to be on the Mozilla Corp VPN to be able
 to query the LDAP server.
 
+You can pipe the output of the script to `delete_users.py` to delete all users in the
+output from the Mozilla Sentry org.
+
 You need to set the `LDAP_BIND_USER` and `SENTRY_RO_TOKEN` environment variables.
 """
 
@@ -60,12 +63,22 @@ def get_ldap_users():
 
 
 def print_users(users):
+    if not users:
+        print("None")
+        return
+    print(
+        "\n{:<10} {:<35} {:<25} {}".format(
+            "User ID", "Email", "Name", "Last login"
+        )
+    )
     for user in users:
-        email = user["email"]
         user_id = user["id"]
-        print(f"{user_id:<10} {email:<40}", end="")
+        email = user["email"]
+        print(f"{user_id:<10} {email:<35}", end="")
         if user["user"]:
-            print(user["user"]["lastLogin"])
+            name = user["name"]
+            last_login = user["user"]["lastLogin"]
+            print(f" {name:<25} {last_login}")
         else:
             print()
 
@@ -87,11 +100,9 @@ def main():
             obsolete_users.append(user)
     expired_invites.sort(key=itemgetter("email"))
     obsolete_users.sort(key=itemgetter("email"))
-    print("User ID    Expired invites")
+    print("\nExpired invites:")
     print_users(expired_invites)
-    print(
-        "\n{:<10} {:<40} {}".format("User ID", "Sentry users not in LDAP", "Last login")
-    )
+    print("\nSentry users not in LDAP:")
     print_users(obsolete_users)
 
 
